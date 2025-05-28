@@ -1,0 +1,12 @@
+apiVersion: postgresql.cnpg.io/v1
+kind: Backup
+metadata:
+  name: backup-ntte
+  namespace: cnpg-system
+spec:
+  cluster:
+    name: cluster-sample-ntte
+  method: barmanObjectStore
+  barmanObjectStore:
+    data:
+      immediateCheckpoint: true
