@@ -5,7 +5,7 @@ metadata:
   namespace: cnpg-system
 spec:
   instances: 3
-  imageName: ghcr.io/cloudnative-pg/postgresql:16.4
+  imageName: ghcr.io/cloudnative-pg/postgresql:16.3
   minSyncReplicas: 1
   maxSyncReplicas: 1
   postgresql:
@@ -26,26 +26,22 @@ spec:
 
   backup:
     barmanObjectStore:
-      destinationPath: 's3://test/'
-      endpointURL: 'http://192.168.200.10:9000'
+      data:
+        immediateCheckpoint: true
+      destinationPath: 's3://cohesity-test/'
+      endpointCA:
+        key: ca.crt
+        name: my-ca-secret-test
+      endpointURL: 'https://backup-sv.cohesity.com:3000'
       s3Credentials:
         accessKeyId:
-          key: MINIO_ACCESS_KEY
-          name: minio-creds
+          key: ACCESS_KEY_ID
+          name: cohesity-creds
         secretAccessKey:
-          key: MINIO_SECRET_KEY
-          name: minio-creds
-      data:
-        compression: gzip
-        immediateCheckpoint: false
-      wal:
-        compression: gzip
-    volumeSnapshot:
-      className: lvms-vg1
-      online: true
-      onlineConfiguration:
-        immediateCheckpoint: false
-        waitForArchive: true
+          key: ACCESS_SECRET_KEY
+          name: cohesity-creds
+    retentionPolicy: 1d
+    target: prefer-standby
 
   monitoring:
     enablePodMonitor: true
