@@ -1,0 +1,51 @@
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: cluster-sample-ntte
+  namespace: cnpg-system
+spec:
+  instances: 3
+  imageName: ghcr.io/cloudnative-pg/postgresql:16.4
+  minSyncReplicas: 1
+  maxSyncReplicas: 1
+  postgresql:
+    parameters:
+      archive_mode: "on"
+      archive_timeout: 5min
+      tcp_keepalives_idle: '600'
+      tcp_keepalives_interval: '60'
+      tcp_keepalives_count: '6'
+
+  storage:
+    storageClass: lvms-vg1
+    size: 2Gi
+
+  walStorage:
+    storageClass: lvms-vg1
+    size: 2Gi
+
+  backup:
+    barmanObjectStore:
+      destinationPath: 's3://test/'
+      endpointURL: 'http://192.168.200.10:9000'
+      s3Credentials:
+        accessKeyId:
+          key: MINIO_ACCESS_KEY
+          name: minio-creds
+        secretAccessKey:
+          key: MINIO_SECRET_KEY
+          name: minio-creds
+      data:
+        compression: gzip
+        immediateCheckpoint: false
+      wal:
+        compression: gzip
+    volumeSnapshot:
+      className: lvms-vg1
+      online: true
+      onlineConfiguration:
+        immediateCheckpoint: false
+        waitForArchive: true
+
+  monitoring:
+    enablePodMonitor: true
