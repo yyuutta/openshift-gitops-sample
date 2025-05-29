@@ -7,6 +7,5 @@ spec:
   cluster:
     name: cluster-sample-ntte
   method: barmanObjectStore
-  barmanObjectStore:
-    data:
-      immediateCheckpoint: true
+  barmanObjectStore: {}
+
