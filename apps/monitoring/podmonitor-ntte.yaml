@@ -1,0 +1,28 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PodMonitor
+metadata:
+  annotations:
+    cnpg.io/operatorVersion: 1.23.6
+  creationTimestamp: "2025-05-29T03:33:34Z"
+  generation: 1
+  labels:
+    cnpg.io/cluster: cluster-sample-ntte
+  name: cluster-sample-ntte
+  namespace: cnpg-system
+  ownerReferences:
+  - apiVersion: postgresql.cnpg.io/v1
+    controller: true
+    kind: Cluster
+    name: cluster-sample-ntte
+    uid: 9bb131cd-8a4a-4036-9261-ee0a1a7e731a
+  resourceVersion: "39180432"
+  uid: d6f12fed-aaf0-407b-a746-3dc4a256a79b
+spec:
+  namespaceSelector: {}
+  podMetricsEndpoints:
+  - bearerTokenSecret:
+      key: ""
+    port: metrics
+  selector:
+    matchLabels:
+      cnpg.io/cluster: cluster-sample-ntte

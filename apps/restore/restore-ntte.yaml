@@ -1,0 +1,32 @@
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: cluster-restore
+spec:
+  instances: 3
+  imageName: ghcr.io/cloudnative-pg/postgresql:16.3
+  minSyncReplicas: 1
+  maxSyncReplicas: 1
+  postgresql:
+    parameters:
+      archive_mode: "on"
+      archive_timeout: 5min
+      tcp_keepalives_idle: '600'
+      tcp_keepalives_interval: '60'
+      tcp_keepalives_count: '6'
+
+  storage:
+    storageClass: lvms-vg1
+    size: 2Gi
+
+  walStorage:
+    storageClass: lvms-vg1
+    size: 2Gi
+
+#  monitoring:
+#    enablePodMonitor: true
+
+  bootstrap:
+    recovery:
+      backup:
+        name: backup-ntte

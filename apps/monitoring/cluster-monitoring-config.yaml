@@ -1,0 +1,14 @@
+apiVersion: v1
+data:
+  config.yaml: |
+    enableUserWorkload: true
+kind: ConfigMap
+metadata:
+  annotations:
+    kubectl.kubernetes.io/last-applied-configuration: |
+      {"apiVersion":"v1","data":{"config.yaml":"enableUserWorkload: true\n"},"kind":"ConfigMap","metadata":{"annotations":{},"name":"cluster-monitoring-config","namespace":"openshift-monitoring"}}
+  creationTimestamp: "2025-03-26T05:36:06Z"
+  name: cluster-monitoring-config
+  namespace: openshift-monitoring
+  resourceVersion: "4824825"
+  uid: d5469dc9-231a-4dfa-8795-b954e7f9f6c7
