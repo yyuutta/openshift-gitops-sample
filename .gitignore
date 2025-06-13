@@ -1,0 +1,5 @@
+# apps/cnpg/secrets以下の平文yamlを除外
+apps/cnpg/secrets/*.yaml
+
+# ただし、-sealed.yamlで終わるファイルは除外しない（管理対象にする）
+!apps/cnpg/secrets/*-sealed.yaml

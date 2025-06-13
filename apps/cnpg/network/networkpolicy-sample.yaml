@@ -1,13 +1,13 @@
 kind: NetworkPolicy
 apiVersion: networking.k8s.io/v1
 metadata:
-  name: ntte-policy
+  name: sample-policy
   namespace: cnpg-system
 spec:
   # Apply the netpol to all pods in a cluster
   podSelector:
     matchLabels:
-      cnpg.io/cluster: cluster-sample-ntte
+      cnpg.io/cluster: cluster-sample
       
   ingress:
     # Allow receiving replication connections from pods in the same namespace
@@ -17,7 +17,7 @@ spec:
       from:
         - podSelector:
             matchLabels:
-              cnpg.io/cluster: cluster-sample-ntte
+              cnpg.io/cluster: cluster-sample
               
     # Allow incoming connections from the operator
     - ports:
@@ -68,7 +68,7 @@ spec:
       to:
         - podSelector:
             matchLabels:
-              cnpg.io/cluster: cluster-sample-ntte
+              cnpg.io/cluster: cluster-sample
               
   policyTypes:
     - Ingress
