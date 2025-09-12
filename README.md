@@ -3,8 +3,6 @@
 
 ## Table of Contents
 - [Overview](#overview)
-- [Custom Images](#custom-images)
-- [Packages](#packages)
 - [Cohesity](#cohesity)
 - [Prometheus](#prometheus)
 - [Argo CD](#argo-cd)
@@ -12,7 +10,6 @@
 
 ## Overview
 
-This repository is a sample for CNPG on OpenShift.  
 The included manifests can be used as examples, but please adjust them according to your environment.
 
 ### Environment
@@ -36,11 +33,11 @@ The included manifests can be used as examples, but please adjust them according
   ```bash
   kubeseal --format yaml < secret.yaml > secret-sealed.yaml
   ```
-## Custom Images
+### Custom Images
 The Dockerfiles used for building the custom CNPG images are maintained in a separate repository:  
 - [cnpg-docker](https://github.com/yyuutta/cnpg-docker)
 
-## Packages
+### Packages
 The built images are published on GitHub Packages.  
 You can find them here:  
 - [GitHub Packages - yyuutta](https://github.com/yyuutta?tab=packages)
