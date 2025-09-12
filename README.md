@@ -1,4 +1,4 @@
-# openshift-gitops-sample
+# OpenShift GitOps Sample
 
 
 ## Table of Contents
@@ -12,8 +12,17 @@
 
 ## Overview
 
-This repository is intended for **team sharing**.  
+This repository is a sample for CNPG on OpenShift. 
 The included manifests can be used as examples, but please adjust them according to your environment:
+
+- **Environment**
+- OpenShift Version: 4.14.0 (Kubernetes v1.27.6)
+- CNPG Operator: 1.23.6
+- CNPG PostgreSQL Images tested:
+  - cloudnative-pg/postgresql:15.8
+  - cloudnative-pg/postgresql:16.2
+  - cloudnative-pg/postgresql:16.3
+- Storage: LVM Storage Operator (lvms-operator.v4.14.12)
 
 - **Namespace / Parameters / Affinity / Taints / Tolerations**  
   → Adapt these settings to match the target guest environment.  
@@ -95,8 +104,8 @@ You can find them here:
 
 - **Set Cohesity credentials**
   ```bash
-  export AWS_ACCESS_KEY_ID=*****
-  export AWS_SECRET_ACCESS_KEY=*****
+  export AWS_ACCESS_KEY_ID=<YOUR-ACCESS-KEY-ID>
+  export AWS_SECRET_ACCESS_KEY=<YOUR-SECRET-ACCESS-KEY>
   ```
 
 - **Check backup contents**
