@@ -1,4 +1,4 @@
-# OpenShift GitOps Sample
+# CNPG on OpenShift GitOps Sample
 
 
 ## Table of Contents
