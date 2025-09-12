@@ -23,6 +23,9 @@ The included manifests can be used as examples, but please adjust them according
   - cloudnative-pg/postgresql:16.2
   - cloudnative-pg/postgresql:16.3
 - Storage: LVM Storage Operator (lvms-operator.v4.14.12)
+- Base OS:
+  - Bastion: Red Hat Enterprise Linux 8.10 (Ootpa)
+  - Cluster Nodes: Red Hat Enterprise Linux CoreOS (RHCOS) 4.14
 
 ### Namespace / Parameters / Affinity / Taints / Tolerations / and others
 - Adapt these settings to match the target guest environment.
