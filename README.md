@@ -29,7 +29,7 @@ The included manifests can be used as examples, but please adjust them according
 
 ### Secrets
 Always manage secrets as **SealedSecrets** when storing them in Git.  
-Example:
+- Example:
   ```bash
   kubeseal --format yaml < secret.yaml > secret-sealed.yaml
   ```
