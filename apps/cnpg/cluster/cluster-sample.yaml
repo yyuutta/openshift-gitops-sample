@@ -1,0 +1,117 @@
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: cluster-sample
+  namespace: <namespace>
+spec:
+  instances: 3
+  imageName: ghcr.io/cloudnative-pg/postgresql:16.3
+  minSyncReplicas: 1
+  maxSyncReplicas: 1
+
+# affinity:
+#   additionalPodAntiAffinity:
+#     preferredDuringSchedulingIgnoredDuringExecution:
+#     - podAffinityTerm:
+#         labelSelector:
+#           matchExpressions:
+#           - key: <key-name>
+#             operator: In
+#             values:
+#             - <your-cluster-label>   # pg-cluster
+#         topologyKey: topology.kubernetes.io/zone
+#       weight: 1
+#   enablePodAntiAffinity: true
+#   nodeAffinity:
+#     requiredDuringSchedulingIgnoredDuringExecution:
+#       nodeSelectorTerms:
+#       - matchExpressions:
+#         - key: <key-name>
+#           operator: In
+#           values:
+#           - <value-name>
+#         - key: <key-name>
+#           operator: In
+#           values:
+#           - <value-name>
+#   podAntiAffinityType: preferred
+#   topologyKey: failure-domain.beta.kubernetes.io/zone
+
+  postgresql:
+    parameters:
+      wal_sender_timeout: "30000"
+      archive_mode: "on"
+      archive_timeout: 5min
+      tcp_keepalives_idle: '600'
+      tcp_keepalives_interval: '60'
+      tcp_keepalives_count: '6'
+      shared_buffers: 512MB
+      work_mem: 4MB
+      effective_cache_size: 1GB
+      max_connections: '50'
+      max_wal_size: 256MB
+      min_wal_size: 128MB
+      checkpoint_timeout: '5min'
+      checkpoint_completion_target: '0.7'
+      log_min_duration_statement: '10s'
+      pg_stat_statements.max: '1000'
+      timezone: Asia/Tokyo
+      log_timezone: Asia/Tokyo
+    pg_hba:
+      - local all all md5
+      - host all all 127.0.0.1/32 md5
+      - host all all ::1/128 md5
+      - host all all 0.0.0.0/0 md5
+
+  bootstrap:
+    initdb:
+#      postInitTemplateSQL:
+#        - CREATE EXTENSION postgis;
+#        - CREATE EXTENSION postgis_topology;
+#        - CREATE EXTENSION fuzzystrmatch;
+#        - CREATE EXTENSION postgis_tiger_geocoder;
+#        - CREATE EXTENSION pg_hint_plan;
+#        - CREATE EXTENSION pg_repack;
+
+  enableSuperuserAccess: true
+  superuserSecret:
+    name: cluster-superuser
+
+  storage:
+    storageClass: <storageClass-name>
+    size: 2Gi
+
+#  walStorage:
+#    storageClass: <storageClass-name>
+#    size: 2Gi
+
+  backup:
+    barmanObjectStore:
+      data:
+        immediateCheckpoint: true
+        compression: bzip2
+        encryption: ""
+      destinationPath: 's3://<your-bucket>/'
+      endpointCA:
+        key: ca.crt
+        name: cohesity-ca
+      endpointURL: 'https://<your-cohesity-endpoint>:3000'
+      s3Credentials:
+        accessKeyId:
+          key: ACCESS_KEY_ID
+          name: cohesity-creds
+        secretAccessKey:
+          key: ACCESS_SECRET_KEY
+          name: cohesity-creds
+      wal:
+        compression: bzip2
+        encryption: ""
+    retentionPolicy: 1d
+    target: prefer-standby
+    #target: primary
+
+  monitoring:
+    enablePodMonitor: true
+    customQueriesConfigMap:
+      - name: example-monitoring
+        key: custom-queries

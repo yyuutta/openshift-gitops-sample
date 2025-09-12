@@ -1,0 +1,76 @@
+kind: NetworkPolicy
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: sample-policy
+  namespace: <namespace>
+spec:
+  # Apply the netpol to all pods in a cluster
+  podSelector:
+    matchLabels:
+      cnpg.io/cluster: cluster-sample
+      
+  ingress:
+    # Allow receiving replication connections from pods in the same namespace
+    - ports:
+        - protocol: TCP
+          port: 5432
+      from:
+        - podSelector:
+            matchLabels:
+              cnpg.io/cluster: cluster-sample
+              
+    # Allow incoming connections from the operator
+    - ports:
+        - protocol: TCP
+          port: 8000
+        - protocol: TCP
+          port: 5432
+      from:
+        - podSelector:
+            matchLabels:
+              app.kubernetes.io/name: cloudnative-pg
+          namespaceSelector:
+            matchLabels:
+              kubernetes.io/metadata.name: openshift-operators
+              
+    # Allow communication from prometheus
+    - ports:
+        - protocol: TCP
+          port: 9187
+      from:
+        - namespaceSelector:
+            matchLabels:
+              kubernetes.io/metadata.name: openshift-user-workload-monitoring
+              
+  egress:
+    # Allow communication to the apiserver
+    - ports:
+        - protocol: TCP
+          port: 6443
+      to:
+        - namespaceSelector:
+            matchLabels:
+              kubernetes.io/metadata.name: openshift-kube-apiserver
+
+    # Allow DNS resolution
+    - to:
+        - podSelector:
+            matchLabels:
+              dns.operator.openshift.io/daemonset-dns: default
+          namespaceSelector:
+            matchLabels:
+              kubernetes.io/metadata.name: openshift-dns
+              
+    # Allow postgres connections to the pods in the namespace
+    - ports:
+        - protocol: TCP
+          port: 5432
+      to:
+        - podSelector:
+            matchLabels:
+              cnpg.io/cluster: cluster-sample
+              
+  policyTypes:
+    - Ingress
+    - Egress
+

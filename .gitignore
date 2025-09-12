@@ -1,0 +1,10 @@
+# Exclude plain YAML files under apps/cnpg/secrets
+apps/cnpg/secrets/*.yaml
+
+# Keep files ending with -sealed.yaml (to be managed in Git)
+!apps/cnpg/secrets/*-sealed.yaml
+
+# Ignore ca.crt and pub-cert.pem (in the repository root)
+ca.crt
+pub-cert.pem
+cohesity-ca
