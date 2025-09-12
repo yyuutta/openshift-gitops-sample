@@ -28,19 +28,19 @@ The included manifests can be used as examples, but please adjust them according
 - Adapt these settings to match the target guest environment.
 
 ### Secrets
-- Always manage secrets as **SealedSecrets** when storing them in Git.  
-- Example:
+Always manage secrets as **SealedSecrets** when storing them in Git.  
+Example:
   ```bash
   kubeseal --format yaml < secret.yaml > secret-sealed.yaml
   ```
 ### Custom Images
 The Dockerfiles used for building the custom CNPG images are maintained in a separate repository:  
-- [cnpg-docker](https://github.com/yyuutta/cnpg-docker)
+[cnpg-docker](https://github.com/yyuutta/cnpg-docker)
 
 ### Packages
 The built images are published on GitHub Packages.  
 You can find them here:  
-- [GitHub Packages - yyuutta](https://github.com/yyuutta?tab=packages)
+[GitHub Packages - yyuutta](https://github.com/yyuutta?tab=packages)
 
 
 ## Cohesity
