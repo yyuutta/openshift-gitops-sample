@@ -12,10 +12,10 @@
 
 ## Overview
 
-This repository is a sample for CNPG on OpenShift. 
-The included manifests can be used as examples, but please adjust them according to your environment:
+This repository is a sample for CNPG on OpenShift.  
+The included manifests can be used as examples, but please adjust them according to your environment.
 
-- **Environment**
+### Environment
 - OpenShift Version: 4.14.0 (Kubernetes v1.27.6)
 - CNPG Operator: 1.23.6
 - CNPG PostgreSQL Images tested:
@@ -24,16 +24,15 @@ The included manifests can be used as examples, but please adjust them according
   - cloudnative-pg/postgresql:16.3
 - Storage: LVM Storage Operator (lvms-operator.v4.14.12)
 
-- **Namespace / Parameters / Affinity / Taints / Tolerations**  
-  → Adapt these settings to match the target guest environment.  
+### Namespace / Parameters / Affinity / Taints / Tolerations / and others
+- Adapt these settings to match the target guest environment.
 
-- **Secrets**  
-  → Always manage secrets as **SealedSecrets** when storing them in Git.  
-  Example:  
+### Secrets
+- Always manage secrets as **SealedSecrets** when storing them in Git.  
+- Example:
   ```bash
   kubeseal --format yaml < secret.yaml > secret-sealed.yaml
   ```
-
 ## Custom Images
 The Dockerfiles used for building the custom CNPG images are maintained in a separate repository:  
 - [cnpg-docker](https://github.com/yyuutta/cnpg-docker)
