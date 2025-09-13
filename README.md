@@ -186,5 +186,5 @@ In this setup, Argo CD has been installed on OpenShift and exposed via a Route.
   > Every application you create in the GUI is stored as an **Application CR**.  
   > You can retrieve the YAML definition with:
   > ```bash
-  > oc -n argocd get application
+  > oc -n argocd get application <app-name> -o yaml
   > ```
