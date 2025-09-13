@@ -158,18 +158,33 @@ In this setup, Argo CD has been installed on OpenShift and exposed via a Route.
 
 - **Login:**  
   Use the `admin` account. The initial password is stored in the `argocd-secret` in the `argocd` namespace.
+    ```bash
+    oc -n argocd get secret
+    ```
 
 - **Repository registration:**  
   From the Argo CD web UI, navigate to:  
   `Settings → Repositories → Connect Repo using HTTPS`  
   Enter your GitHub repository URL and credentials.
 
-- **Application creation:**  
-  From the Argo CD web UI, navigate to:  
-  `Applications → + NEW APP`  
-  Provide the application name, project, repository, revision, path, destination cluster, and namespace.  
-  Sync policy can remain **Manual** for the initial setup.
+- **Application creation:**
+  From the Argo CD web UI:
 
-After configuration, you can push manifests to the Git repository, and Argo CD will detect changes.  
-Click **SYNC** in the UI to apply updates to the OpenShift cluster.
+  1. Navigate to `Applications → + NEW APP`
+  2. Provide:
+     - Application name
+     - Project
+     - Repository
+     - Revision
+     - Path
+     - Destination cluster
+     - Namespace
+  3. Leave the Sync policy as **Manual** for the initial setup.
+  4. After configuration, push manifests to the Git repository. Argo CD will detect changes.
+  5. Click **SYNC** in the UI to apply updates to the OpenShift cluster.
 
+  > Every application you create in the GUI is stored as an **Application CR**.  
+  > You can retrieve the YAML definition with:
+  > ```bash
+  > oc get application <app-name> -n argocd -o yaml
+  > ```
